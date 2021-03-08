@@ -22,6 +22,16 @@ def convert_to_gray(img, option='gray'):
         else:
             return r
 
+def calculcate_hist(img):
+    if len(img.shape) < 3:
+        channels = 1
+    else:
+        _,_,channels = img.shape
+    hist = np.zeros((256, channels))
+    for i in range(channels):
+        hist[:, i] = cv2.calcHist([img], [i], None, [256], [0, 256])[:, 0]
+    return hist
+
 # function for gaussian blur
 def apply_kernel(img, kernel_size=5,type='filter2D', kernel = None):
     if type == 'filter2D':
@@ -84,3 +94,35 @@ def sobel_edge_detector(frame, sobel_kernel_size=5, sobel_x_derivative_order=1, 
 
     final_output = cv2.addWeighted(grad_x_abs,0.5, grad_y_abs,0.5,0)
     return final_output
+
+def open_video(args):
+    cap = cv2.VideoCapture(args.data)
+    if (cap.isOpened() == False):
+        print("Error opening video stream or file")
+
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    return cap, total_frames
+
+def read_video(cap,val):
+    # widht,height = get_width_height()
+    cap.set(1, val)
+    ret, frame = cap.read()
+    return frame
+
+def apply_threshold(frame, thresh_val, thresh_max, thresh_option):
+    if thresh_option == "binary":
+        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_BINARY)
+        return frame
+    if thresh_option == "inverse binary":
+        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_BINARY_INV)
+        return frame
+    if thresh_option == "truncated":
+        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_TRUNC)
+        return frame
+    if thresh_option == "to zero":
+        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_TOZERO)
+        return frame
+    if thresh_option == "inverse to zero":
+        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_TOZERO_INV)
+        return frame
