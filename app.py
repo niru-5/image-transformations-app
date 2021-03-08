@@ -54,6 +54,9 @@ def main():
     if options['hsv'] and not options['gray_scale']:
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
 
+    if options['hist_normalize']:
+        frame = normalize_hist(frame)
+
     if options['kernel_apply']:
         frame = apply_kernel(frame, options['kernel_size'], options['kernel_type'])
 
@@ -62,6 +65,8 @@ def main():
 
     if options['erosion_apply']:
         frame = transformations(frame, options['transformation_type'], options['tf_kernel_size'], options['tf_kernel_type'])
+
+
 
     frame = placing_text(frame, options['text'], position=(options['pos_x'], options['pos_y']))
 

@@ -126,3 +126,13 @@ def apply_threshold(frame, thresh_val, thresh_max, thresh_option):
     if thresh_option == "inverse to zero":
         frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_TOZERO_INV)
         return frame
+
+def normalize_hist(frame):
+    if len(frame.shape) < 3:
+        frame = cv2.equalizeHist(frame)
+        return frame
+    else:
+        _,_,channels= frame.shape
+        for i in range(channels):
+            frame[:,:,i] = cv2.equalizeHist(frame[:,:,i])
+    return frame

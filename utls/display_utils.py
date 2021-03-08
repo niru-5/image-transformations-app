@@ -34,6 +34,7 @@ def build_side_bar():
     options['hsv'] = st.sidebar.checkbox("Convert to HSV", False)
 
     options['display_hist'] = st.sidebar.checkbox("Display Histogram", False)
+    options['hist_normalize'] = st.sidebar.checkbox("Perform Histogram Equalization", False)
 
     st.sidebar.header("Apply Various Kernels")
     # kernel size, kernel type
