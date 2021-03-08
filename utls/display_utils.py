@@ -1,7 +1,6 @@
 import cv2
 import streamlit as st
 import numpy as np
-import random
 import io
 import argparse
 from utls.cv_utils import *
