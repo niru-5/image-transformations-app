@@ -42,10 +42,17 @@ def build_side_bar():
     options['kernel_type'] = st.sidebar.selectbox("select the Kernel Type",
                                        ("average_blur", "gaussian_blur", "median_blur", "bilateral_filter"))
 
+    st.sidebar.header("Apply color transofmations")
+    options['color_apply'] = st.sidebar.checkbox("Should the color transformations be applied", False)
+    options['contrast'] = st.sidebar.number_input("Choose kernel size", 0.0, 2.0, 1.0, 0.01)
+    options['brightness'] = st.sidebar.number_input("Choose kernel size", 0, 255, 0, 1)
+
     st.sidebar.header("Apply Threshold functions")
     options['thresh_apply'] = st.sidebar.checkbox("Should the threshold be applied", False)
     options['thresh_val'] = st.sidebar.number_input("Choose Threshold value", 0, 255, 128, 1)
     options['thresh_max'] = st.sidebar.number_input("Choose Threshold max value", options['thresh_val'], 255, 255, 1)
+    options['thresh_pref'] = st.sidebar.selectbox("Should the threshold be applied to specific channel",
+                                                  ("gray",'red','blue','green') )
     options['thresh_option'] = st.sidebar.selectbox("select the Kernel Type",
                                          ("binary", "inverse binary", "truncated", "to zero", "inverse to zero"))
 

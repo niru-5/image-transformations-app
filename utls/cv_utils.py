@@ -22,6 +22,10 @@ def convert_to_gray(img, option='gray'):
         else:
             return r
 
+def apply_color_transformations(frame, contrast, brightness):
+    frame = cv2.convertScaleAbs(frame, alpha=contrast, beta=brightness)
+    return frame
+
 def calculcate_hist(img):
     if len(img.shape) < 3:
         channels = 1
@@ -51,15 +55,17 @@ def threshold_img(img, img_type='gray', threshold_val=128, max_val=255, option=c
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         ret, thresh = cv2.threshold(img, threshold_val, max_val, option)
         return thresh
-    elif img_type == 'color':
+    else:
         (b,g,r) = cv2.split(img)
-        (b_col,g_col,r_col) = threshold_val
-        (b_max, g_max, r_max) = max_val
-        ret_b, thresh_b = cv2.threshold(b, b_col, b_max, option)
-        ret_g, thresh_g = cv2.threshold(g, g_col, g_max, option)
-        ret_r, thresh_r = cv2.threshold(r, r_col, r_max, option)
-        new_img = cv2.merge((thresh_b,thresh_g,thresh_r))
-        return new_img
+        if img_type == 'red':
+            ret_r, thresh_r = cv2.threshold(r, threshold_val, max_val, option)
+            return thresh_r
+        if img_type == 'green':
+            ret_g, thresh_g = cv2.threshold(g, threshold_val, max_val, option)
+            return thresh_g
+        if img_type == 'blue':
+            ret_b, thresh_b = cv2.threshold(b, threshold_val, max_val, option)
+            return thresh_b
 
 def transformations(img, type='erosion', kernel_size=5, kernel_type='average', iterations = 1):
     kernel = get_kernel(kernel_size, kernel_type)
@@ -110,21 +116,21 @@ def read_video(cap,val):
     ret, frame = cap.read()
     return frame
 
-def apply_threshold(frame, thresh_val, thresh_max, thresh_option):
+def apply_threshold(frame, thresh_val, thresh_max, thresh_option, thresh_pref):
     if thresh_option == "binary":
-        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_BINARY)
+        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_BINARY)
         return frame
     if thresh_option == "inverse binary":
-        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_BINARY_INV)
+        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_BINARY_INV)
         return frame
     if thresh_option == "truncated":
-        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_TRUNC)
+        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_TRUNC)
         return frame
     if thresh_option == "to zero":
-        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_TOZERO)
+        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_TOZERO)
         return frame
     if thresh_option == "inverse to zero":
-        frame = threshold_img(frame, 'gray',thresh_val, thresh_max, cv2.THRESH_TOZERO_INV)
+        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_TOZERO_INV)
         return frame
 
 def normalize_hist(frame):
