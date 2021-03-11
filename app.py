@@ -8,7 +8,7 @@ from utls.display_utils import *
 def get_arg_parser():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--data",type=str, default='/hdd/mai/computer_vision/assignment_1/video_1.mp4',
+    parser.add_argument("--data",type=str, default='./sample_data/video.mp4',
                         help='provide the path to data')
     return parser
 
