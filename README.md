@@ -1,6 +1,7 @@
 # image-transformations-app
 A streamlit app to visualize images/video and apply basic image transformations to get some insights.
 The app is built on streamlit and on the backend, opencv functions are called to be applied on the image. 
+![](display_images/output.gif)
 
 ## Usage
 A video could be analysed with the following command
