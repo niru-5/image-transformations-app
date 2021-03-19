@@ -47,6 +47,11 @@ There is a provision to apply some of the common filters like gaussian kernels o
 
 ![](display_images/kernel.gif)
 
+### Applying Color transformations
+Some of the common color transformations like contrast and brightness could be tweaked in the app. 
+
+![](display_images/color.gif)
+
 ### Applying Image transformations
 Apart from basic thresholding, even some morphological transformations can also be visualized.  
 
