@@ -40,7 +40,7 @@ This functions include some of the commonly used ones
 ### Thresholding functions
 It also provides simple thresholding functions that are part of the opencv. These can be applied to a specific channel and this can be chosen by the options.  
 
-![](display_images/threshold.gif)
+![](display_images/thresh.gif)
 
 ### Applying various filters
 There is a provision to apply some of the common filters like gaussian kernels or a median filter. Even kernel size could be adjusted.  
