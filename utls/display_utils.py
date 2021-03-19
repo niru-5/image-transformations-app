@@ -49,8 +49,17 @@ def build_side_bar():
 
     st.sidebar.header("Apply Threshold functions")
     options['thresh_apply'] = st.sidebar.checkbox("Should the threshold be applied", False)
-    options['thresh_val'] = st.sidebar.number_input("Choose Threshold value", 0, 255, 128, 1)
-    options['thresh_max'] = st.sidebar.number_input("Choose Threshold max value", options['thresh_val'], 255, 255, 1)
+    options['min_r'] = st.sidebar.slider("Min red color value", 0, 255, 0, 1)
+    options['max_r'] = st.sidebar.slider("Max red color value", 0, 255, 128, 1)
+
+    options['min_g'] = st.sidebar.slider("Min green color value", 0, 255, 0, 1)
+    options['max_g'] = st.sidebar.slider("Max green color value", 0, 255, 128, 1)
+
+    options['min_b'] = st.sidebar.slider("Min blue color value", 0, 255, 0, 1)
+    options['max_b'] = st.sidebar.slider("Max blue color value", 0, 255, 128, 1)
+
+    options['thresh_val'] = st.sidebar.slider("Choose Threshold value", 0, 255, 0, 1)
+    options['thresh_max'] = st.sidebar.slider("Choose Threshold max value", options['thresh_val'], 255, 255, 1)
     options['thresh_pref'] = st.sidebar.selectbox("Should the threshold be applied to specific channel",
                                                   ("gray",'red','blue','green') )
     options['thresh_option'] = st.sidebar.selectbox("select the Kernel Type",

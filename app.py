@@ -64,7 +64,7 @@ def main():
         frame = apply_kernel(frame, options['kernel_size'], options['kernel_type'])
 
     if options['thresh_apply']:
-        frame = apply_threshold(frame, options['thresh_val'], options['thresh_max'], options['thresh_option'], options['thresh_pref'])
+        frame = apply_threshold(frame, options ,options['thresh_val'], options['thresh_max'], options['thresh_option'], options['thresh_pref'])
 
     if options['erosion_apply']:
         frame = transformations(frame, options['transformation_type'], options['tf_kernel_size'], options['tf_kernel_type'])

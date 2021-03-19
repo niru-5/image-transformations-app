@@ -116,21 +116,29 @@ def read_video(cap,val):
     ret, frame = cap.read()
     return frame
 
-def apply_threshold(frame, thresh_val, thresh_max, thresh_option, thresh_pref):
-    if thresh_option == "binary":
-        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_BINARY)
+def apply_threshold(frame, options, thresh_val, thresh_max, thresh_option, thresh_pref):
+    mask = cv2.inRange(frame, np.array([options['min_r'], options['min_g'], options['min_b']]),
+                       np.array([options['max_r'], options['max_g'], options['max_b']]))
+    frame = cv2.bitwise_and(frame, frame, mask=mask)
+
+    if options['thresh_option'] == "binary":
+        frame = threshold_img(frame, options['thresh_pref'],options['thresh_val'], options['thresh_max'], cv2.THRESH_BINARY)
         return frame
-    if thresh_option == "inverse binary":
-        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_BINARY_INV)
+    if options['thresh_option'] == "inverse binary":
+        frame = threshold_img(frame, options['thresh_pref'], options['thresh_val'], options['thresh_max'],
+                              cv2.THRESH_BINARY_INV)
         return frame
-    if thresh_option == "truncated":
-        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_TRUNC)
+    if options['thresh_option'] == "truncated":
+        frame = threshold_img(frame, options['thresh_pref'], options['thresh_val'], options['thresh_max'],
+                              cv2.THRESH_TRUNC)
         return frame
-    if thresh_option == "to zero":
-        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_TOZERO)
+    if options['thresh_option'] == "to zero":
+        frame = threshold_img(frame, options['thresh_pref'], options['thresh_val'], options['thresh_max'],
+                              cv2.THRESH_TOZERO)
         return frame
-    if thresh_option == "inverse to zero":
-        frame = threshold_img(frame, thresh_pref,thresh_val, thresh_max, cv2.THRESH_TOZERO_INV)
+    if options['thresh_option'] == "inverse to zero":
+        frame = threshold_img(frame, options['thresh_pref'], options['thresh_val'], options['thresh_max'],
+                              cv2.THRESH_TOZERO_INV)
         return frame
 
 def normalize_hist(frame):
